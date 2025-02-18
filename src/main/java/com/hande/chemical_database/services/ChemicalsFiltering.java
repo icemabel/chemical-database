@@ -1,18 +1,20 @@
 package com.hande.chemical_database.services;
 
 import com.hande.chemical_database.entities.Chemicals;
+import com.hande.chemical_database.models.ChemicalDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 /*
  * 17/02/2025
  * handebarkan
  */
 public interface ChemicalsFiltering {
-    List<Chemicals> searchByName(String name);
+    Optional<ChemicalDTO> searchByName(String name);
 
     List<Chemicals> searchByCASNo(String CASNo);
 

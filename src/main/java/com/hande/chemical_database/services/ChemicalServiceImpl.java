@@ -2,6 +2,8 @@ package com.hande.chemical_database.services;
 
 import com.hande.chemical_database.exceptions.ResourceNotFoundException;
 import com.hande.chemical_database.entities.Chemicals;
+import com.hande.chemical_database.mappers.ChemicalMapper;
+import com.hande.chemical_database.models.ChemicalDTO;
 import com.hande.chemical_database.repositories.ChemicalRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /*
  * 17/02/2025
@@ -22,47 +25,47 @@ import java.util.Optional;
 public class ChemicalServiceImpl implements ChemicalService {
 
     private final ChemicalRepo chemicalRepo;
+    private final ChemicalMapper chemicalMapper;
 
     @Override
-    public Chemicals createChemicals(Chemicals chemical) {
-        return chemicalRepo.save(chemical);
+    public ChemicalDTO createChemicals(ChemicalDTO chemical) {
+
+        return chemicalMapper.chemicalToChemicalDTO(chemicalRepo.save(chemicalMapper.chemicalDTOToChemical(chemical)));
     }
 
     @Override
-    public Chemicals updateChemicals(Chemicals chemical) {
+    public Optional<ChemicalDTO> updateChemicals(ChemicalDTO chemical) {
 
-        Optional<Chemicals> chemicalDb = chemicalRepo.findById(chemical.getId());
+        Optional<ChemicalDTO> chemicalDb = chemicalRepo.findAllByNameIsLikeIgnoreCase(chemical.getName());
         if(chemicalDb.isPresent()) {
-            Chemicals chemicalUpdate = chemicalDb.get();
+            ChemicalDTO chemicalUpdate = chemicalDb.get();
             chemicalUpdate.setName(chemical.getName());
             chemicalUpdate.setCASNo(chemical.getCASNo());
             chemicalUpdate.setLotNo(chemical.getLotNo());
             chemicalUpdate.setProducer(chemical.getProducer());
             chemicalUpdate.setStorage(chemical.getStorage());
             chemicalUpdate.setOrderDate(chemical.getOrderDate());
-            chemicalUpdate.setOrderDate(chemical.getOrderDate());
-            chemicalRepo.save(chemicalUpdate);
-            return chemicalUpdate;
+            ChemicalDTO updatedChemical = chemicalMapper.chemicalToChemicalDTO(
+                    chemicalRepo.save(chemicalMapper.chemicalDTOToChemical(chemicalUpdate)));
+            return Optional.of(updatedChemical);
         } else {
-            throw new ResourceNotFoundException("Record not found with id : " + chemical);
+            throw new ResourceNotFoundException("Record not found with name : " + chemical);
         }
     }
 
     @Override
-    public List<Chemicals> getAllChemicals() {
+    public List<ChemicalDTO> getAllChemicals() {
 
-        return chemicalRepo.findAll();
+        return chemicalRepo.findAll().stream()
+                .map(chemicalMapper::chemicalToChemicalDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Chemicals getChemicalById(Long id) {
+    public Optional<ChemicalDTO> getChemicalById(Long id) {
 
-        Optional<Chemicals> chemicalsDb = chemicalRepo.findById(id);
-        if(chemicalsDb.isPresent()) {
-            return chemicalsDb.get();
-        } else {
-            throw new ResourceNotFoundException("Record not found with id : " + id);
-        }
+        return Optional.ofNullable(chemicalMapper.chemicalToChemicalDTO(chemicalRepo.findById(id)
+                .orElse(null)));
     }
 
     @Override
@@ -75,5 +78,15 @@ public class ChemicalServiceImpl implements ChemicalService {
             throw new ResourceNotFoundException("Record not found with id : " + id);
         }
 
+    }
+
+    @Override
+    public boolean deleteChemicalByName(String name) {
+        if(chemicalRepo.existsByName(name)) {
+            chemicalRepo.deleteByName(name);
+            return true;
+        } else {
+            throw new ResourceNotFoundException("Record not found with name : " + name);
+        }
     }
 }

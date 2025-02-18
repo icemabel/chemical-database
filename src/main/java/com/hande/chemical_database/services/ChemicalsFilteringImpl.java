@@ -1,6 +1,8 @@
 package com.hande.chemical_database.services;
 
 import com.hande.chemical_database.entities.Chemicals;
+import com.hande.chemical_database.mappers.ChemicalMapper;
+import com.hande.chemical_database.models.ChemicalDTO;
 import com.hande.chemical_database.repositories.ChemicalRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /*
  * 17/02/2025
@@ -23,13 +26,14 @@ import java.util.List;
 public class ChemicalsFilteringImpl implements ChemicalsFiltering {
 
     private final ChemicalRepo chemicalRepo;
+    private final ChemicalMapper chemicalMapper;
     private static final int DEFAULT_PAGE = 0;
     private static final int DEFAULT_PAGE_SIZE = 25;
 
     @Override
-    public List<Chemicals> searchByName(String name) {
+    public Optional<ChemicalDTO> searchByName(String name) {
 
-        return chemicalRepo.findByName(name);
+        return chemicalRepo.findAllByNameIsLikeIgnoreCase(name);
     }
 
     @Override

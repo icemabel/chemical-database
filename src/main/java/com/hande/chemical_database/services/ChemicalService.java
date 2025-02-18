@@ -1,8 +1,9 @@
 package com.hande.chemical_database.services;
 
-import com.hande.chemical_database.entities.Chemicals;
+import com.hande.chemical_database.models.ChemicalDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 /*
  * 17/02/2025
@@ -10,18 +11,16 @@ import java.util.List;
  */
 public interface ChemicalService {
 
-    Chemicals createChemicals(Chemicals chemical);
+    ChemicalDTO createChemicals(ChemicalDTO chemical);
 
-    Chemicals updateChemicals(Chemicals chemical);
+    Optional<ChemicalDTO> updateChemicals(ChemicalDTO chemical);
 
-    List<Chemicals> getAllChemicals();
+    List<ChemicalDTO> getAllChemicals();
 
-    Chemicals getChemicalById(Long id);
+    Optional<ChemicalDTO> getChemicalById(Long id);
 
     boolean deleteChemical(Long id);
-
-
-
+    boolean deleteChemicalByName(String name);
 
 }
 
