@@ -1,6 +1,6 @@
 package com.hande.chemical_database.repositories;
 
-import com.hande.chemical_database.models.Chemicals;
+import com.hande.chemical_database.entities.Chemicals;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

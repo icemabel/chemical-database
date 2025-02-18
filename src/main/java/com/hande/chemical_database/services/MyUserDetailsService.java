@@ -1,7 +1,7 @@
 package com.hande.chemical_database.services;
 
 import com.hande.chemical_database.models.UserPrincipal;
-import com.hande.chemical_database.models.UserProfile;
+import com.hande.chemical_database.entities.UserProfile;
 import com.hande.chemical_database.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

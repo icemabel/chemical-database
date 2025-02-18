@@ -1,6 +1,6 @@
 package com.hande.chemical_database.services;
 
-import com.hande.chemical_database.models.Chemicals;
+import com.hande.chemical_database.entities.Chemicals;
 import com.hande.chemical_database.repositories.ChemicalRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

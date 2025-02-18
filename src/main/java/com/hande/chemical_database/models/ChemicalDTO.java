@@ -1,32 +1,30 @@
 package com.hande.chemical_database.models;
 
-/*
- * 17/02/2025
- * handebarkan
- */
-
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
 import java.time.LocalDate;
 
-@Data
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
+/*
+ * 18/02/2025
+ * handebarkan
+ */
 @Builder
-public class Chemicals {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NonNull
+@Data
+public class ChemicalDTO {
+    @NotBlank
+    @NotNull
     private String name;
     private String CASNo;
     private String LotNo;
     private String producer;
+    @NotBlank
+    @NotNull
     private String storage;
-    @Column(nullable = true)
     private Boolean toxicState;
     private String responsible;
     private LocalDate orderDate;

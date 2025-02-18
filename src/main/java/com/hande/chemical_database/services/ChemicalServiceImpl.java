@@ -1,29 +1,14 @@
 package com.hande.chemical_database.services;
 
 import com.hande.chemical_database.exceptions.ResourceNotFoundException;
-import com.hande.chemical_database.models.Chemicals;
+import com.hande.chemical_database.entities.Chemicals;
 import com.hande.chemical_database.repositories.ChemicalRepo;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /*
  * 17/02/2025

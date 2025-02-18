@@ -1,6 +1,6 @@
 package com.hande.chemical_database.services;
 
-import com.hande.chemical_database.models.Chemicals;
+import com.hande.chemical_database.entities.Chemicals;
 import com.hande.chemical_database.repositories.ChemicalRepo;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
